@@ -1,0 +1,253 @@
+/* The page around the Flutter app: canvas colour edge to edge, the splash
+   that stands in until Flutter's first frame, and the iPhone install
+   guide. Colours and font are the app's own (AppColors, Alexandria). */
+@font-face {
+  font-family: 'Alexandria';
+  src: url('assets/assets/fonts/Alexandria-VF.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --canvas: #FBF9F6;
+  --surface: #FFFFFF;
+  --muted: #F5F3F0;
+  --bone: #EFECE6;
+  --primary: #004253;
+  --primary-bright: #0F5B6F;
+  --primary-wash: rgba(15, 91, 111, 0.12);
+  --text: #1B1C1A;
+  --text-2: #40484C;
+  --clay: #9D4225;
+  --clay-soft: #FFDBD0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--canvas);
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: 'Alexandria', -apple-system, system-ui, sans-serif;
+  color: var(--text);
+  -webkit-text-size-adjust: 100%;
+}
+
+#splash {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+  background: var(--canvas);
+  transition: opacity 200ms ease-out;
+}
+
+#splash.gone {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#startup-error {
+  max-width: 320px;
+  margin: 0 24px;
+  text-align: center;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+/* Reads env(safe-area-inset-*) for the app (app_shell.js). */
+#safe-area-probe {
+  position: fixed;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* --- Install guide ----------------------------------------------------- */
+
+#install {
+  box-sizing: border-box;
+  max-width: 480px;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: calc(24px + env(safe-area-inset-top)) 20px
+    calc(32px + env(safe-area-inset-bottom));
+  line-height: 1.6;
+}
+
+.install-head {
+  text-align: center;
+}
+
+.install-head img {
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 66, 83, 0.18);
+}
+
+.install-head h1 {
+  margin: 16px 0 6px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.lead {
+  margin: 0 0 20px;
+  color: var(--text-2);
+  font-size: 15px;
+}
+
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps > li {
+  counter-increment: step;
+  position: relative;
+  margin: 0 0 12px;
+  padding: 14px 16px 14px 16px;
+  padding-inline-start: 56px;
+  background: var(--surface);
+  border: 1px solid var(--bone);
+  border-radius: 16px;
+}
+
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  inset-inline-start: 14px;
+  top: 14px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.steps p {
+  margin: 2px 0;
+  font-size: 16px;
+}
+
+.steps b {
+  color: var(--primary);
+}
+
+.steps svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+section.steps {
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--bone);
+  border-radius: 16px;
+}
+
+/* Drawings of Safari's own controls. */
+svg .bar { fill: #F2F2F4; stroke: #DCDCE0; }
+svg .sheet { fill: #F2F2F4; }
+svg .field { fill: #E4E4E8; }
+svg .hit { fill: var(--surface); stroke: var(--primary-bright); stroke-width: 2.5; }
+svg .hit-strong { fill: #0A84FF; }
+svg .ring { fill: var(--primary-wash); stroke: var(--primary-bright); stroke-width: 3; }
+svg .dot { fill: #1C1C1E; }
+svg .ink { stroke: #0A84FF; }
+svg .ink.faint { stroke: #9FC9FF; }
+svg .share, svg .plus { stroke: #1C1C1E; fill: none; }
+svg .toggle { fill: #34C759; }
+svg .knob { fill: #FFFFFF; }
+svg text { font-family: 'Alexandria', -apple-system, sans-serif; }
+/* In right-to-left text "start" is the right edge: x is where the label
+   begins, just left of its icon. */
+svg .label { font-size: 15px; fill: #1C1C1E; text-anchor: start; direction: rtl; }
+svg .url { font-size: 13px; fill: #3C3C43; text-anchor: middle; direction: ltr; }
+svg .button { font-size: 14px; font-weight: 700; fill: #FFFFFF; text-anchor: middle; direction: rtl; }
+
+.warning {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 16px 0 10px;
+  padding: 14px 16px;
+  background: var(--clay-soft);
+  color: var(--clay);
+  border-radius: 16px;
+}
+
+.warning svg { flex: none; margin-top: 3px; }
+.warning p { margin: 0; font-size: 15px; }
+
+.note {
+  margin: 0 4px 20px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.link {
+  padding: 6px 12px;
+  background: var(--muted);
+  border-radius: 10px;
+  font-weight: 700;
+  user-select: all;
+  -webkit-user-select: all;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+#copy-link {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+}
+
+.secondary {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  border: 1.5px solid var(--bone);
+  border-radius: 14px;
+  background: transparent;
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.noscript {
+  margin: 40px 20px;
+  text-align: center;
+}

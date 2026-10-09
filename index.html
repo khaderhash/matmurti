@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <!-- Replaced by `flutter build web --base-href`; the app is served from the
+       root of its own origin. -->
+  <base href="/matmurti/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>مطمورتي</title>
+  <meta name="description" content="مطمورتي: سجل مصاريفك ومداخيلك بالليرة السورية والدولار، بدون إنترنت.">
+
+  <!-- The app draws on a canvas, so search engines would see an empty page:
+       keep it out of the index and point them at the landing page. -->
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://www.khaderhash.me/matmurti/">
+
+  <!-- Only this origin, ever: no CDN, no fonts.gstatic.com, no analytics.
+       GitHub Pages cannot send headers, so the policy is a meta tag.
+       'wasm-unsafe-eval' compiles the renderer and SQLite; blob: workers are
+       the renderer's; inline styles are Flutter's own. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+
+  <!-- Installed app: name, icon, full screen, light status bar with dark
+       icons on the app's canvas colour. -->
+  <meta name="theme-color" content="#FBF9F6">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="مطمورتي">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="icon" href="favicon.ico" sizes="any">
+
+  <link rel="stylesheet" href="app_shell.css">
+</head>
+<body>
+  <!-- Same canvas and jar as the Flutter splash, until its first frame. -->
+  <div id="splash" aria-hidden="true">
+    <img src="assets/assets/brand/jar_tile.webp" width="140" height="140" alt="">
+    <p id="startup-error" hidden>ما قدرنا نفتح مطمورتي على هالمتصفح. حدّث المتصفح أو نظام الجهاز وجرّب مرة تانية.</p>
+  </div>
+
+  <!-- iPhone, in Safari, not installed: how to add the app to the home
+       screen (app_shell.js picks the variant). Plain HTML, so Flutter is
+       not downloaded into a tab the user will close. -->
+  <main id="install" hidden>
+    <header class="install-head">
+      <img src="icons/apple-touch-icon.png" width="72" height="72" alt="">
+      <h1>ثبّت مطمورتي على الشاشة الرئيسية</h1>
+      <p class="lead">بتشتغل متل أي تطبيق، وبدون إنترنت. التثبيت من Safari ببلاش وبياخد ثواني.</p>
+    </header>
+
+    <!-- iOS 26 and later: the Share button is inside the ••• menu. -->
+    <ol class="steps" data-variant="safari26" hidden>
+      <li>
+        <p>اضغط زر <b>•••</b> تحت الشاشة</p>
+        <svg viewBox="0 0 320 76" role="img" aria-label="شريط Safari السفلي وزر النقاط الثلاث">
+          <rect x="6" y="10" width="308" height="56" rx="28" class="bar"/>
+          <path d="M268 38l12-12M268 38l12 12" class="ink" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <rect x="70" y="22" width="184" height="32" rx="16" class="field"/>
+          <text x="162" y="42" class="url">khaderhash.github.io</text>
+          <circle cx="40" cy="38" r="22" class="ring"/>
+          <circle cx="30" cy="38" r="3.6" class="dot"/><circle cx="40" cy="38" r="3.6" class="dot"/><circle cx="50" cy="38" r="3.6" class="dot"/>
+        </svg>
+      </li>
+      <li>
+        <p>اختر <b>مشاركة</b></p>
+        <svg viewBox="0 0 320 70" role="img" aria-label="خيار مشاركة">
+          <rect x="6" y="6" width="308" height="58" rx="16" class="sheet"/>
+          <rect x="12" y="12" width="296" height="46" rx="12" class="hit"/>
+          <text x="250" y="42" class="label">مشاركة</text>
+          <g transform="translate(270 21)" class="share"><path d="M14 2v20M7 9l7-7 7 7" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 14v12h18V14" fill="none" stroke-width="3" stroke-linejoin="round"/></g>
+        </svg>
+      </li>
+      <li>
+        <p>انزل لتحت واضغط <b>إضافة إلى الشاشة الرئيسية</b></p>
+        <svg viewBox="0 0 320 70" role="img" aria-label="خيار إضافة إلى الشاشة الرئيسية">
+          <rect x="6" y="6" width="308" height="58" rx="16" class="sheet"/>
+          <rect x="12" y="12" width="296" height="46" rx="12" class="hit"/>
+          <text x="248" y="42" class="label">إضافة إلى الشاشة الرئيسية</text>
+          <g transform="translate(266 20)" class="plus"><rect x="1.5" y="1.5" width="27" height="27" rx="7" fill="none" stroke-width="3"/><path d="M15 8v14M8 15h14" stroke-width="3" stroke-linecap="round"/></g>
+        </svg>
+      </li>
+      <li>
+        <p>خلّي <b>فتح كتطبيق ويب</b> مفعّل، واضغط <b>إضافة</b></p>
+        <svg viewBox="0 0 320 112" role="img" aria-label="مفتاح فتح كتطبيق ويب وزر إضافة">
+          <rect x="6" y="6" width="308" height="100" rx="16" class="sheet"/>
+          <rect x="16" y="16" width="70" height="30" rx="15" class="hit-strong"/>
+          <text x="51" y="37" class="button">إضافة</text>
+          <text x="296" y="84" class="label">فتح كتطبيق ويب</text>
+          <rect x="30" y="66" width="56" height="30" rx="15" class="toggle"/>
+          <circle cx="71" cy="81" r="12" class="knob"/>
+        </svg>
+      </li>
+      <li>
+        <p>افتح مطمورتي من أيقونتها على الشاشة</p>
+      </li>
+    </ol>
+
+    <!-- iOS 16.4 to 18: the Share button is in the bottom toolbar. -->
+    <ol class="steps" data-variant="safari" hidden>
+      <li>
+        <p>اضغط زر <b>المشاركة</b> تحت الشاشة</p>
+        <svg viewBox="0 0 320 76" role="img" aria-label="شريط Safari السفلي وزر المشاركة">
+          <rect x="6" y="10" width="308" height="56" rx="14" class="bar"/>
+          <path d="M282 38l10-10M282 38l10 10" class="ink" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M230 38l-10-10M230 38l-10 10" class="ink faint" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <circle cx="160" cy="38" r="22" class="ring"/>
+          <g transform="translate(146 22)" class="share"><path d="M14 2v18M7 9l7-7 7 7" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13v13h18V13" fill="none" stroke-width="3" stroke-linejoin="round"/></g>
+          <path d="M84 28h14a6 6 0 016 6v14M70 30v16a6 6 0 006 6h16" class="ink faint" stroke-width="3" fill="none"/>
+          <rect x="24" y="27" width="22" height="22" rx="5" class="ink faint" stroke-width="3" fill="none"/>
+        </svg>
+      </li>
+      <li>
+        <p>انزل لتحت واضغط <b>إضافة إلى الشاشة الرئيسية</b></p>
+        <svg viewBox="0 0 320 70" role="img" aria-label="خيار إضافة إلى الشاشة الرئيسية">
+          <rect x="6" y="6" width="308" height="58" rx="16" class="sheet"/>
+          <rect x="12" y="12" width="296" height="46" rx="12" class="hit"/>
+          <text x="248" y="42" class="label">إضافة إلى الشاشة الرئيسية</text>
+          <g transform="translate(266 20)" class="plus"><rect x="1.5" y="1.5" width="27" height="27" rx="7" fill="none" stroke-width="3"/><path d="M15 8v14M8 15h14" stroke-width="3" stroke-linecap="round"/></g>
+        </svg>
+      </li>
+      <li>
+        <p>اضغط <b>إضافة</b> فوق الشاشة</p>
+      </li>
+      <li>
+        <p>افتح مطمورتي من أيقونتها على الشاشة</p>
+      </li>
+    </ol>
+
+    <!-- Chrome, Firefox or Edge on the iPhone. -->
+    <ol class="steps" data-variant="other-browser" hidden>
+      <li><p>اضغط زر <b>المشاركة</b> جنب العنوان فوق الشاشة</p></li>
+      <li><p>اختر <b>إضافة إلى الشاشة الرئيسية</b>، ثم <b>إضافة</b></p></li>
+      <li><p>افتح مطمورتي من أيقونتها على الشاشة</p></li>
+    </ol>
+
+    <!-- Inside Instagram, Facebook, TikTok…: those cannot add to the home
+         screen. -->
+    <section class="steps" data-variant="in-app" hidden>
+      <p>هالصفحة مفتوحة جوّا تطبيق تاني، ومن هون ما بينفع التثبيت.</p>
+      <p>اضغط <b>•••</b> أو زر المشاركة واختر <b>فتح في Safari</b>، أو انسخ الرابط والصقه بـ Safari:</p>
+      <p class="link-row"><span class="link" dir="ltr">khaderhash.github.io/matmurti</span> <button type="button" id="copy-link">نسخ الرابط</button></p>
+    </section>
+
+    <!-- Older than iOS 16.4. -->
+    <section class="steps" data-variant="old-ios" hidden>
+      <p>مطمورتي بتحتاج iOS 16.4 أو أحدث.</p>
+      <p>حدّث الآيفون من <b>الإعدادات ← عام ← تحديث البرنامج</b>، ورجاع افتح هالرابط.</p>
+    </section>
+
+    <aside class="warning">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3L2 21h20L12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v5M12 18v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <p><b>مهم:</b> إذا كمّلت من Safari بدون تثبيت، أي شي بتسجله هون <b>ما رح يظهر</b> بالتطبيق بعد ما تثبّته، ومتصفح Safari ممكن يمسحه لحاله.</p>
+    </aside>
+
+    <p class="note">ما لقيت «إضافة إلى الشاشة الرئيسية»؟ افتح الرابط بتطبيق Safari نفسه، مو من جوّا تطبيق تاني.</p>
+
+    <button type="button" id="continue-anyway" class="secondary">كمّل بدون تثبيت</button>
+  </main>
+
+  <noscript>
+    <p class="noscript">مطمورتي بتحتاج JavaScript. فعّله من إعدادات المتصفح.</p>
+  </noscript>
+
+  <!-- Decides between the install guide and the app, then loads Flutter
+       (flutter_bootstrap.js) and the offline service worker. -->
+  <script src="app_shell.js"></script>
+</body>
+</html>
