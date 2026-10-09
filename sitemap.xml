@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Submit this in Google Search Console (property https://khaderhash.github.io/matmurti/).
+     Only the welcome page: the app (/matmurti/app/) is noindex. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://khaderhash.github.io/matmurti/</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+</urlset>

@@ -1,174 +1,226 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <!-- Replaced by `flutter build web --base-href`; the app is served from the
-       root of its own origin. -->
-  <base href="/matmurti/">
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>مطمورتي</title>
-  <meta name="description" content="مطمورتي: سجل مصاريفك ومداخيلك بالليرة السورية والدولار، بدون إنترنت.">
-
-  <!-- The app draws on a canvas, so search engines would see an empty page:
-       keep it out of the index and point them at the landing page. -->
-  <meta name="robots" content="noindex">
-  <link rel="canonical" href="https://www.khaderhash.me/matmurti/">
-
-  <!-- Only this origin, ever: no CDN, no fonts.gstatic.com, no analytics.
-       GitHub Pages cannot send headers, so the policy is a meta tag.
-       'wasm-unsafe-eval' compiles the renderer and SQLite; blob: workers are
-       the renderer's; inline styles are Flutter's own. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-  <meta name="referrer" content="no-referrer">
-
-  <!-- Installed app: name, icon, full screen, light status bar with dark
-       icons on the app's canvas colour. -->
-  <meta name="theme-color" content="#FBF9F6">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="مطمورتي">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="format-detection" content="telephone=no">
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-  <link rel="icon" href="favicon.ico" sizes="any">
-
-  <link rel="stylesheet" href="app_shell.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مطمورتي — تطبيق مصاريف بالليرة السورية والدولار بدون إنترنت</title>
+<meta name="description" content="تطبيق مصاريف مجاني بالليرة السورية والدولار: حساب المصاريف والمداخيل بدون انترنت، بالليرة الجديدة والقديمة، مع التصريف. للأندرويد والآيفون، وبياناتك على موبايلك بس.">
+<link rel="canonical" href="https://khaderhash.github.io/matmurti/">
+<!-- ═══ GOOGLE SEARCH CONSOLE ═══════════════════════════════════════════
+     Replace this whole comment block with the verification tag Search
+     Console gives you (edit tool/web/make_welcome.py, not the HTML; see
+     docs/github-pages.md), e.g.:
+     <meta name="google-site-verification" content="YOUR-CODE">
+     ═════════════════════════════════════════════════════════════════════ -->
+<meta name="theme-color" content="#004253">
+<link rel="icon" href="jar.webp" type="image/webp">
+<link rel="apple-touch-icon" href="app/icons/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:site_name" content="مطمورتي">
+<meta property="og:url" content="https://khaderhash.github.io/matmurti/">
+<meta property="og:title" content="مطمورتي — مصاريفك ومداخيلك بالليرة والدولار">
+<meta property="og:description" content="بيشتغل بدون إنترنت، وبياناتك محفوظة على موبايلك بس. مجاني للأندرويد والآيفون.">
+<meta property="og:image" content="https://khaderhash.github.io/matmurti/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="شاشات تطبيق مطمورتي">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+// Opened from a home-screen icon (one made here before the app moved to
+// app/, or this page added itself), or an old link to an app screen
+// (#/home): go to the app.
+if (navigator.standalone === true ||
+    matchMedia('(display-mode: standalone)').matches ||
+    location.hash.indexOf('#/') === 0) {
+  location.replace('app/' + location.hash);
+}
+// The visitor's phone first; both buttons always show.
+(function () {
+  var ua = navigator.userAgent, c = document.documentElement.classList;
+  if (/iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) c.add('ios');
+  else if (/Android/.test(ua)) c.add('android');
+})();
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://khaderhash.github.io/matmurti/#app",
+   "name": "مطمورتي",
+   "alternateName": "Matmurti",
+   "url": "https://khaderhash.github.io/matmurti/",
+   "description": "تطبيق مصاريف مجاني بالليرة السورية والدولار: حساب المصاريف والمداخيل بدون انترنت، بالليرة الجديدة والقديمة، مع التصريف. للأندرويد والآيفون، وبياناتك على موبايلك بس.",
+   "inLanguage": "ar",
+   "applicationCategory": "FinanceApplication",
+   "operatingSystem": "Android 7.0+, iOS 16.4+ (web app)",
+   "softwareVersion": "1.1.0",
+   "fileSize": "16.5 MB",
+   "downloadUrl": [
+    "https://github.com/khaderhash/matmurti/releases/latest/download/matmurti.apk",
+    "https://khaderhash.github.io/matmurti/app/"
+   ],
+   "installUrl": "https://khaderhash.github.io/matmurti/app/",
+   "isAccessibleForFree": true,
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "featureList": [
+    "يشتغل بدون إنترنت",
+    "الليرة السورية الجديدة والقديمة والدولار",
+    "تسجيل التصريف بين الدولار والليرة",
+    "نسخة احتياطية بملف إكسل بين الأندرويد والآيفون",
+    "بدون حساب، والبيانات على الموبايل بس"
+   ],
+   "image": "https://khaderhash.github.io/matmurti/og.jpg",
+   "author": {
+    "@type": "Person",
+    "name": "Khader Hassan Hwaijeh",
+    "url": "https://www.khaderhash.me/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://khaderhash.github.io/matmurti/#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "هل مطمورتي مجاني؟",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "إي، مجاني بالكامل: بدون إعلانات وبدون اشتراك."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "هل بيحتاج إنترنت؟",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "لا. نسخة الأندرويد ما إلها صلاحية إنترنت أصلاً. نسخة الآيفون بتحتاج إنترنت أول مرة بس لتنزل، وبعدها بتشتغل بدون إنترنت."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "وين بتنحفظ بياناتي؟",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "على موبايلك بس، جوّا التطبيق. ما في حساب ولا سيرفر، وما حدا غيرك بيشوفها. على الآيفون، إذا حذفت أيقونة التطبيق بتنحذف بياناته معها، فخلّي عندك نسخة احتياطية."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "كيف بثبّته على الآيفون؟",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "اضغط «آيفون» بهالصفحة من Safari أو Chrome، وبيفتحلك التطبيق مع الخطوات: زر المشاركة (بـ Safari على iOS 26: زر ••• ثم مشاركة؛ بـ Chrome: بشريط العنوان)، بعدين «إضافة إلى الشاشة الرئيسية» و«إضافة». بيحتاج iOS 16.4 أو أحدث."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "كيف بثبّته على الأندرويد؟",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "اضغط «أندرويد» بهالصفحة من كروم، واستنى لحتى يخلص التنزيل (حجم الملف 16.5 ميغا)، وافتحه. إذا طلب منك، اسمح بالتثبيت من هالمصدر، وإذا طلع تحذير من Play Protect اختار «التفاصيل» وبعدين «التثبيت على أي حال»."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "طلعلي «الحزمة تبدو غير صالحة»، شو أعمل؟",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "غالباً التنزيل ما كمل. احذف الملف، ونزّله من جديد من كروم (مو من جوا انستغرام أو تيليجرام)، وتأكد إنو حجمه 16.5 ميغا قبل ما تفتحه."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "كيف بنقل بياناتي لموبايل جديد؟",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "من الإعدادات اختار «تصدير البيانات»، بيطلعلك ملف إكسل، احفظه أو ابعته لحالك. على الموبايل الجديد اختار «استيراد البيانات» وافتح الملف. نفس الملف بيشتغل بين الأندرويد والآيفون."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "هل بيدعم الليرة القديمة والجديدة؟",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "إي. بتكتب المبلغ بالليرة القديمة أو الجديدة والتطبيق بيحوّل لحاله (100 قديمة = 1 جديدة). وكمان بتقدر تسجل بالدولار وتسجل التصريف بين الدولار والليرة."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<style>
+:root{--bg:#FBF9F6;--surface:#fff;--line:#EFECE6;--primary:#004253;--primary2:#0F5B6F;--clay:#9D4225;--claySoft:#FFDBD0;--text:#1B1C1A;--text2:#40484C}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,-apple-system,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif}
+main{max-width:520px;margin:0 auto;padding:calc(28px + env(safe-area-inset-top)) 18px calc(36px + env(safe-area-inset-bottom))}
+header{text-align:center}
+header img{width:96px;height:100px;border-radius:22px;box-shadow:0 8px 20px rgba(0,66,83,.25)}
+h1{margin:14px 0 4px;font-size:2.1rem;line-height:1.2;color:var(--primary)}
+.tagline{margin:0 auto;max-width:380px;color:var(--text2)}
+#get{display:flex;flex-direction:column;gap:14px;margin:26px 0 0}
+.choice{display:flex;flex-direction:column}
+.ios .choice.iphone,.android .choice.android{order:-1}
+.btn{display:block;text-align:center;text-decoration:none;border-radius:18px;padding:16px;font-weight:700;font-size:1.35rem;background:var(--surface);color:var(--primary);border:2px solid var(--line)}
+.btn small{display:block;font-size:.85rem;font-weight:500;color:var(--text2);margin-top:2px}
+.ios .iphone .btn,.android .android .btn,html:not(.ios):not(.android) .btn{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;border-color:transparent;box-shadow:0 10px 22px rgba(0,66,83,.28)}
+.ios .iphone .btn small,.android .android .btn small,html:not(.ios):not(.android) .btn small{color:#fff;opacity:.85}
+.hint{margin:8px 4px 0;text-align:center;font-size:.9rem;color:var(--text2)}
+.privacy{display:flex;gap:12px;align-items:center;margin:22px 0 0;padding:14px 16px;border-radius:16px;background:var(--claySoft);color:#5a1d08;font-weight:600}
+.privacy svg{flex:0 0 26px}
+.follow{margin:18px 0 0;text-align:center}
+.follow a{color:var(--primary);font-weight:700;text-decoration:none}
+.follow bdi{direction:ltr}
+h2{font-size:1.15rem;margin:40px 0 8px;color:var(--primary)}
+details{margin:8px 0;padding:12px 16px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+summary{cursor:pointer;font-weight:700;color:var(--primary)}
+details p{margin:8px 0 0}
+</style>
 </head>
 <body>
-  <!-- Same canvas and jar as the Flutter splash, until its first frame. -->
-  <div id="splash" aria-hidden="true">
-    <img src="assets/assets/brand/jar_tile.webp" width="140" height="140" alt="">
-    <p id="startup-error" hidden>ما قدرنا نفتح مطمورتي على هالمتصفح. حدّث المتصفح أو نظام الجهاز وجرّب مرة تانية.</p>
+<main>
+<header>
+  <img src="data:image/webp;base64,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" width="96" height="100" alt="شعار مطمورتي">
+  <h1>مطمورتي</h1>
+  <p class="tagline">سجّل مصاريفك ومداخيلك بالليرة السورية والدولار، وبيشتغل بدون إنترنت.</p>
+</header>
+
+<div id="get">
+  <div class="choice iphone">
+    <a class="btn" href="app/">آيفون<small>بيفتح التطبيق وبيعلّمك كيف تضيفه للشاشة الرئيسية</small></a>
   </div>
+  <div class="choice android">
+    <a class="btn" href="https://github.com/khaderhash/matmurti/releases/latest/download/matmurti.apk">أندرويد<small>الإصدار 1.1.0 · 16.5 ميغا · ملف APK</small></a>
+    <p class="hint">لازم يطلع حجم الملف 16.5 ميغا. نزّلو من كروم، مو من جوا انستغرام أو تيليجرام.</p>
+  </div>
+</div>
 
-  <!-- iPhone, in Safari, not installed: how to add the app to the home
-       screen (app_shell.js picks the variant). Plain HTML, so Flutter is
-       not downloaded into a tab the user will close. -->
-  <main id="install" hidden>
-    <header class="install-head">
-      <img src="icons/apple-touch-icon.png" width="72" height="72" alt="">
-      <h1>ثبّت مطمورتي على الشاشة الرئيسية</h1>
-      <p class="lead">بتشتغل متل أي تطبيق، وبدون إنترنت. التثبيت من Safari ببلاش وبياخد ثواني.</p>
-    </header>
+<p class="privacy">
+  <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="#9D4225" d="M12 1 3 5v6c0 5.6 3.8 10.7 9 12 5.2-1.3 9-6.4 9-12V5l-9-4zm-1.5 15.5-4-4 1.4-1.4 2.6 2.6 5.6-5.6 1.4 1.4-7 7z"/></svg>
+  بياناتك محفوظة على موبايلك بس
+</p>
 
-    <!-- iOS 26 and later: the Share button is inside the ••• menu. -->
-    <ol class="steps" data-variant="safari26" hidden>
-      <li>
-        <p>اضغط زر <b>•••</b> تحت الشاشة</p>
-        <svg viewBox="0 0 320 76" role="img" aria-label="شريط Safari السفلي وزر النقاط الثلاث">
-          <rect x="6" y="10" width="308" height="56" rx="28" class="bar"/>
-          <path d="M268 38l12-12M268 38l12 12" class="ink" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <rect x="70" y="22" width="184" height="32" rx="16" class="field"/>
-          <text x="162" y="42" class="url">khaderhash.github.io</text>
-          <circle cx="40" cy="38" r="22" class="ring"/>
-          <circle cx="30" cy="38" r="3.6" class="dot"/><circle cx="40" cy="38" r="3.6" class="dot"/><circle cx="50" cy="38" r="3.6" class="dot"/>
-        </svg>
-      </li>
-      <li>
-        <p>اختر <b>مشاركة</b></p>
-        <svg viewBox="0 0 320 70" role="img" aria-label="خيار مشاركة">
-          <rect x="6" y="6" width="308" height="58" rx="16" class="sheet"/>
-          <rect x="12" y="12" width="296" height="46" rx="12" class="hit"/>
-          <text x="250" y="42" class="label">مشاركة</text>
-          <g transform="translate(270 21)" class="share"><path d="M14 2v20M7 9l7-7 7 7" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 14v12h18V14" fill="none" stroke-width="3" stroke-linejoin="round"/></g>
-        </svg>
-      </li>
-      <li>
-        <p>انزل لتحت واضغط <b>إضافة إلى الشاشة الرئيسية</b></p>
-        <svg viewBox="0 0 320 70" role="img" aria-label="خيار إضافة إلى الشاشة الرئيسية">
-          <rect x="6" y="6" width="308" height="58" rx="16" class="sheet"/>
-          <rect x="12" y="12" width="296" height="46" rx="12" class="hit"/>
-          <text x="248" y="42" class="label">إضافة إلى الشاشة الرئيسية</text>
-          <g transform="translate(266 20)" class="plus"><rect x="1.5" y="1.5" width="27" height="27" rx="7" fill="none" stroke-width="3"/><path d="M15 8v14M8 15h14" stroke-width="3" stroke-linecap="round"/></g>
-        </svg>
-      </li>
-      <li>
-        <p>خلّي <b>فتح كتطبيق ويب</b> مفعّل، واضغط <b>إضافة</b></p>
-        <svg viewBox="0 0 320 112" role="img" aria-label="مفتاح فتح كتطبيق ويب وزر إضافة">
-          <rect x="6" y="6" width="308" height="100" rx="16" class="sheet"/>
-          <rect x="16" y="16" width="70" height="30" rx="15" class="hit-strong"/>
-          <text x="51" y="37" class="button">إضافة</text>
-          <text x="296" y="84" class="label">فتح كتطبيق ويب</text>
-          <rect x="30" y="66" width="56" height="30" rx="15" class="toggle"/>
-          <circle cx="71" cy="81" r="12" class="knob"/>
-        </svg>
-      </li>
-      <li>
-        <p>افتح مطمورتي من أيقونتها على الشاشة</p>
-      </li>
-    </ol>
+<p class="follow"><a href="https://www.instagram.com/khader._.hwaijeh/" rel="noopener">تابعني على انستغرام <bdi>@khader._.hwaijeh</bdi></a></p>
 
-    <!-- iOS 16.4 to 18: the Share button is in the bottom toolbar. -->
-    <ol class="steps" data-variant="safari" hidden>
-      <li>
-        <p>اضغط زر <b>المشاركة</b> تحت الشاشة</p>
-        <svg viewBox="0 0 320 76" role="img" aria-label="شريط Safari السفلي وزر المشاركة">
-          <rect x="6" y="10" width="308" height="56" rx="14" class="bar"/>
-          <path d="M282 38l10-10M282 38l10 10" class="ink" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <path d="M230 38l-10-10M230 38l-10 10" class="ink faint" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <circle cx="160" cy="38" r="22" class="ring"/>
-          <g transform="translate(146 22)" class="share"><path d="M14 2v18M7 9l7-7 7 7" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13v13h18V13" fill="none" stroke-width="3" stroke-linejoin="round"/></g>
-          <path d="M84 28h14a6 6 0 016 6v14M70 30v16a6 6 0 006 6h16" class="ink faint" stroke-width="3" fill="none"/>
-          <rect x="24" y="27" width="22" height="22" rx="5" class="ink faint" stroke-width="3" fill="none"/>
-        </svg>
-      </li>
-      <li>
-        <p>انزل لتحت واضغط <b>إضافة إلى الشاشة الرئيسية</b></p>
-        <svg viewBox="0 0 320 70" role="img" aria-label="خيار إضافة إلى الشاشة الرئيسية">
-          <rect x="6" y="6" width="308" height="58" rx="16" class="sheet"/>
-          <rect x="12" y="12" width="296" height="46" rx="12" class="hit"/>
-          <text x="248" y="42" class="label">إضافة إلى الشاشة الرئيسية</text>
-          <g transform="translate(266 20)" class="plus"><rect x="1.5" y="1.5" width="27" height="27" rx="7" fill="none" stroke-width="3"/><path d="M15 8v14M8 15h14" stroke-width="3" stroke-linecap="round"/></g>
-        </svg>
-      </li>
-      <li>
-        <p>اضغط <b>إضافة</b> فوق الشاشة</p>
-      </li>
-      <li>
-        <p>افتح مطمورتي من أيقونتها على الشاشة</p>
-      </li>
-    </ol>
-
-    <!-- Chrome, Firefox or Edge on the iPhone. -->
-    <ol class="steps" data-variant="other-browser" hidden>
-      <li><p>اضغط زر <b>المشاركة</b> جنب العنوان فوق الشاشة</p></li>
-      <li><p>اختر <b>إضافة إلى الشاشة الرئيسية</b>، ثم <b>إضافة</b></p></li>
-      <li><p>افتح مطمورتي من أيقونتها على الشاشة</p></li>
-    </ol>
-
-    <!-- Inside Instagram, Facebook, TikTok…: those cannot add to the home
-         screen. -->
-    <section class="steps" data-variant="in-app" hidden>
-      <p>هالصفحة مفتوحة جوّا تطبيق تاني، ومن هون ما بينفع التثبيت.</p>
-      <p>اضغط <b>•••</b> أو زر المشاركة واختر <b>فتح في Safari</b>، أو انسخ الرابط والصقه بـ Safari:</p>
-      <p class="link-row"><span class="link" dir="ltr">khaderhash.github.io/matmurti</span> <button type="button" id="copy-link">نسخ الرابط</button></p>
-    </section>
-
-    <!-- Older than iOS 16.4. -->
-    <section class="steps" data-variant="old-ios" hidden>
-      <p>مطمورتي بتحتاج iOS 16.4 أو أحدث.</p>
-      <p>حدّث الآيفون من <b>الإعدادات ← عام ← تحديث البرنامج</b>، ورجاع افتح هالرابط.</p>
-    </section>
-
-    <aside class="warning">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3L2 21h20L12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v5M12 18v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <p><b>مهم:</b> إذا كمّلت من Safari بدون تثبيت، أي شي بتسجله هون <b>ما رح يظهر</b> بالتطبيق بعد ما تثبّته، ومتصفح Safari ممكن يمسحه لحاله.</p>
-    </aside>
-
-    <p class="note">ما لقيت «إضافة إلى الشاشة الرئيسية»؟ افتح الرابط بتطبيق Safari نفسه، مو من جوّا تطبيق تاني.</p>
-
-    <button type="button" id="continue-anyway" class="secondary">كمّل بدون تثبيت</button>
-  </main>
-
-  <noscript>
-    <p class="noscript">مطمورتي بتحتاج JavaScript. فعّله من إعدادات المتصفح.</p>
-  </noscript>
-
-  <!-- Decides between the install guide and the app, then loads Flutter
-       (flutter_bootstrap.js) and the offline service worker. -->
-  <script src="app_shell.js"></script>
+<section class="faq">
+<h2>أسئلة شائعة</h2>
+<details><summary>هل مطمورتي مجاني؟</summary><p>إي، مجاني بالكامل: بدون إعلانات وبدون اشتراك.</p></details>
+<details><summary>هل بيحتاج إنترنت؟</summary><p>لا. نسخة الأندرويد ما إلها صلاحية إنترنت أصلاً. نسخة الآيفون بتحتاج إنترنت أول مرة بس لتنزل، وبعدها بتشتغل بدون إنترنت.</p></details>
+<details><summary>وين بتنحفظ بياناتي؟</summary><p>على موبايلك بس، جوّا التطبيق. ما في حساب ولا سيرفر، وما حدا غيرك بيشوفها. على الآيفون، إذا حذفت أيقونة التطبيق بتنحذف بياناته معها، فخلّي عندك نسخة احتياطية.</p></details>
+<details><summary>كيف بثبّته على الآيفون؟</summary><p>اضغط «آيفون» بهالصفحة من Safari أو Chrome، وبيفتحلك التطبيق مع الخطوات: زر المشاركة (بـ Safari على iOS 26: زر ••• ثم مشاركة؛ بـ Chrome: بشريط العنوان)، بعدين «إضافة إلى الشاشة الرئيسية» و«إضافة». بيحتاج iOS 16.4 أو أحدث.</p></details>
+<details><summary>كيف بثبّته على الأندرويد؟</summary><p>اضغط «أندرويد» بهالصفحة من كروم، واستنى لحتى يخلص التنزيل (حجم الملف 16.5 ميغا)، وافتحه. إذا طلب منك، اسمح بالتثبيت من هالمصدر، وإذا طلع تحذير من Play Protect اختار «التفاصيل» وبعدين «التثبيت على أي حال».</p></details>
+<details><summary>طلعلي «الحزمة تبدو غير صالحة»، شو أعمل؟</summary><p>غالباً التنزيل ما كمل. احذف الملف، ونزّله من جديد من كروم (مو من جوا انستغرام أو تيليجرام)، وتأكد إنو حجمه 16.5 ميغا قبل ما تفتحه.</p></details>
+<details><summary>كيف بنقل بياناتي لموبايل جديد؟</summary><p>من الإعدادات اختار «تصدير البيانات»، بيطلعلك ملف إكسل، احفظه أو ابعته لحالك. على الموبايل الجديد اختار «استيراد البيانات» وافتح الملف. نفس الملف بيشتغل بين الأندرويد والآيفون.</p></details>
+<details><summary>هل بيدعم الليرة القديمة والجديدة؟</summary><p>إي. بتكتب المبلغ بالليرة القديمة أو الجديدة والتطبيق بيحوّل لحاله (100 قديمة = 1 جديدة). وكمان بتقدر تسجل بالدولار وتسجل التصريف بين الدولار والليرة.</p></details>
+</section>
+</main>
 </body>
 </html>

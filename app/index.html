@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <!-- Replaced by `flutter build web --base-href`; the app is served from the
+       root of its own origin. -->
+  <base href="/matmurti/app/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>مطمورتي</title>
+  <meta name="description" content="مطمورتي: سجل مصاريفك ومداخيلك بالليرة السورية والدولار، بدون إنترنت.">
+
+  <!-- The app draws on a canvas, so search engines would see an empty page:
+       keep it out of the index and point them at the welcome page. -->
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://khaderhash.github.io/matmurti/">
+
+  <!-- Only this origin, ever: no CDN, no fonts.gstatic.com, no analytics.
+       GitHub Pages cannot send headers, so the policy is a meta tag.
+       'wasm-unsafe-eval' compiles the renderer and SQLite; blob: workers are
+       the renderer's; inline styles are Flutter's own. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+
+  <!-- Installed app: name, icon, full screen, light status bar with dark
+       icons on the app's canvas colour. -->
+  <meta name="theme-color" content="#FBF9F6">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="مطمورتي">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="icon" href="favicon.ico" sizes="any">
+
+  <!-- The splash paints from this alone (the jar is inlined at build time
+       by tool/web/build.dart): no request stands before the first paint.
+       It is the Flutter splash's exact twin: same canvas, the jar 140 dp
+       high at the same aspect (BrandLogo), centred. -->
+  <style>
+    [hidden] { display: none !important; }
+    html, body { margin: 0; height: 100%; background: #FBF9F6; }
+    #splash { position: fixed; inset: 0; display: flex; align-items: center;
+      justify-content: center; background: #FBF9F6;
+      transition: opacity 200ms ease-out; }
+    #splash.gone { opacity: 0; pointer-events: none; }
+    #splash img { width: 134.232px; height: 140px; }
+    /* Below the jar, without moving it. */
+    #splash .below { position: absolute; left: 24px; right: 24px;
+      top: calc(50% + 70px + 28px); text-align: center; color: #40484C;
+      font: 15px/1.7 system-ui, -apple-system, sans-serif; }
+    #first-visit p { margin: 0 auto 14px; max-width: 300px; }
+    #first-visit .bar { position: relative; width: 140px; height: 3px;
+      margin: 0 auto; overflow: hidden; border-radius: 3px; background: #EFECE6; }
+    #first-visit .bar::after { content: ''; position: absolute; top: 0;
+      bottom: 0; width: 40%; border-radius: 3px; background: #0F5B6F;
+      animation: matmurti-load 1.6s ease-in-out infinite; }
+    @keyframes matmurti-load { from { right: -40%; } to { right: 100%; } }
+    @media (prefers-reduced-motion: reduce) {
+      #first-visit .bar::after { animation: none; right: 30%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Same canvas and jar as the Flutter splash, until its first frame. -->
+  <div id="splash" aria-hidden="true">
+    <img src="data:image/webp;base64,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" width="134" height="140" alt="">
+    <!-- First visit only, after a moment: the app is downloading. -->
+    <div id="first-visit" class="below" hidden>
+      <p>أول مرة بياخد شوي وقت لينزل التطبيق. بعدها بيفتح فوراً، وبدون إنترنت.</p>
+      <div class="bar"></div>
+    </div>
+    <p id="startup-error" class="below" hidden>ما قدرنا نفتح مطمورتي على هالمتصفح. حدّث المتصفح أو نظام الجهاز وجرّب مرة تانية.</p>
+  </div>
+
+  <!-- iPhone, in Safari, not installed: how to add the app to the home
+       screen (app_shell.js picks the variant). Plain HTML, so Flutter is
+       not downloaded into a tab the user will close. -->
+  <main id="install" hidden>
+    <header class="install-head">
+      <img src="icons/apple-touch-icon.png" width="72" height="72" alt="">
+      <h1>ثبّت مطمورتي على الشاشة الرئيسية</h1>
+      <p class="lead">بتشتغل متل أي تطبيق، وبدون إنترنت. التثبيت ببلاش وبياخد ثواني.</p>
+    </header>
+
+    <!-- iOS 26 and later: the Share button is inside the ••• menu. -->
+    <ol class="steps" data-variant="safari26" hidden>
+      <li>
+        <p>اضغط زر <b>•••</b> تحت الشاشة</p>
+        <svg viewBox="0 0 320 76" role="img" aria-label="شريط Safari السفلي وزر النقاط الثلاث">
+          <rect x="6" y="10" width="308" height="56" rx="28" class="bar"/>
+          <path d="M268 38l12-12M268 38l12 12" class="ink" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <rect x="70" y="22" width="184" height="32" rx="16" class="field"/>
+          <text x="162" y="42" class="url">khaderhash.github.io</text>
+          <circle cx="40" cy="38" r="22" class="ring"/>
+          <circle cx="30" cy="38" r="3.6" class="dot"/><circle cx="40" cy="38" r="3.6" class="dot"/><circle cx="50" cy="38" r="3.6" class="dot"/>
+        </svg>
+      </li>
+      <li>
+        <p>اختر <b>مشاركة</b></p>
+        <svg viewBox="0 0 320 70" role="img" aria-label="خيار مشاركة">
+          <rect x="6" y="6" width="308" height="58" rx="16" class="sheet"/>
+          <rect x="12" y="12" width="296" height="46" rx="12" class="hit"/>
+          <text x="250" y="42" class="label">مشاركة</text>
+          <g transform="translate(270 21)" class="share"><path d="M14 2v20M7 9l7-7 7 7" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 14v12h18V14" fill="none" stroke-width="3" stroke-linejoin="round"/></g>
+        </svg>
+      </li>
+      <li>
+        <p>انزل لتحت واضغط <b>إضافة إلى الشاشة الرئيسية</b></p>
+        <svg viewBox="0 0 320 70" role="img" aria-label="خيار إضافة إلى الشاشة الرئيسية">
+          <rect x="6" y="6" width="308" height="58" rx="16" class="sheet"/>
+          <rect x="12" y="12" width="296" height="46" rx="12" class="hit"/>
+          <text x="248" y="42" class="label">إضافة إلى الشاشة الرئيسية</text>
+          <g transform="translate(266 20)" class="plus"><rect x="1.5" y="1.5" width="27" height="27" rx="7" fill="none" stroke-width="3"/><path d="M15 8v14M8 15h14" stroke-width="3" stroke-linecap="round"/></g>
+        </svg>
+      </li>
+      <li>
+        <p>خلّي <b>فتح كتطبيق ويب</b> مفعّل، واضغط <b>إضافة</b></p>
+        <svg viewBox="0 0 320 112" role="img" aria-label="مفتاح فتح كتطبيق ويب وزر إضافة">
+          <rect x="6" y="6" width="308" height="100" rx="16" class="sheet"/>
+          <rect x="16" y="16" width="70" height="30" rx="15" class="hit-strong"/>
+          <text x="51" y="37" class="button">إضافة</text>
+          <text x="296" y="84" class="label">فتح كتطبيق ويب</text>
+          <rect x="30" y="66" width="56" height="30" rx="15" class="toggle"/>
+          <circle cx="71" cy="81" r="12" class="knob"/>
+        </svg>
+      </li>
+      <li>
+        <p>افتح مطمورتي من أيقونتها على الشاشة</p>
+      </li>
+    </ol>
+
+    <!-- iOS 16.4 to 18: the Share button is in the bottom toolbar. -->
+    <ol class="steps" data-variant="safari" hidden>
+      <li>
+        <p>اضغط زر <b>المشاركة</b> تحت الشاشة</p>
+        <svg viewBox="0 0 320 76" role="img" aria-label="شريط Safari السفلي وزر المشاركة">
+          <rect x="6" y="10" width="308" height="56" rx="14" class="bar"/>
+          <path d="M282 38l10-10M282 38l10 10" class="ink" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M230 38l-10-10M230 38l-10 10" class="ink faint" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <circle cx="160" cy="38" r="22" class="ring"/>
+          <g transform="translate(146 22)" class="share"><path d="M14 2v18M7 9l7-7 7 7" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13v13h18V13" fill="none" stroke-width="3" stroke-linejoin="round"/></g>
+          <path d="M84 28h14a6 6 0 016 6v14M70 30v16a6 6 0 006 6h16" class="ink faint" stroke-width="3" fill="none"/>
+          <rect x="24" y="27" width="22" height="22" rx="5" class="ink faint" stroke-width="3" fill="none"/>
+        </svg>
+      </li>
+      <li>
+        <p>انزل لتحت واضغط <b>إضافة إلى الشاشة الرئيسية</b></p>
+        <svg viewBox="0 0 320 70" role="img" aria-label="خيار إضافة إلى الشاشة الرئيسية">
+          <rect x="6" y="6" width="308" height="58" rx="16" class="sheet"/>
+          <rect x="12" y="12" width="296" height="46" rx="12" class="hit"/>
+          <text x="248" y="42" class="label">إضافة إلى الشاشة الرئيسية</text>
+          <g transform="translate(266 20)" class="plus"><rect x="1.5" y="1.5" width="27" height="27" rx="7" fill="none" stroke-width="3"/><path d="M15 8v14M8 15h14" stroke-width="3" stroke-linecap="round"/></g>
+        </svg>
+      </li>
+      <li>
+        <p>اضغط <b>إضافة</b> فوق الشاشة</p>
+      </li>
+      <li>
+        <p>افتح مطمورتي من أيقونتها على الشاشة</p>
+      </li>
+    </ol>
+
+    <!-- Chrome on the iPhone (iOS 16.4+ lets it add web apps to the Home
+         Screen; they open as an app, like Safari's). Share is in the
+         address bar; with the bar at the bottom it is there instead. -->
+    <ol class="steps" data-variant="chrome" hidden>
+      <li>
+        <p>اضغط زر <b>المشاركة</b> بشريط العنوان</p>
+        <svg viewBox="0 0 320 76" role="img" aria-label="شريط عنوان Chrome وزر المشاركة">
+          <rect x="6" y="10" width="308" height="56" rx="28" class="bar"/>
+          <rect x="70" y="22" width="232" height="32" rx="16" class="field"/>
+          <text x="196" y="42" class="url">khaderhash.github.io</text>
+          <circle cx="40" cy="38" r="22" class="ring"/>
+          <g transform="translate(26 22)" class="share"><path d="M14 2v18M7 9l7-7 7 7" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 13v13h18V13" fill="none" stroke-width="3" stroke-linejoin="round"/></g>
+        </svg>
+        <p class="sub">ما لقيته؟ اضغط <b>•••</b> وبعدين <b>مشاركة</b>.</p>
+      </li>
+      <li>
+        <p>انزل لتحت واضغط <b>إضافة إلى الشاشة الرئيسية</b></p>
+        <svg viewBox="0 0 320 70" role="img" aria-label="خيار إضافة إلى الشاشة الرئيسية">
+          <rect x="6" y="6" width="308" height="58" rx="16" class="sheet"/>
+          <rect x="12" y="12" width="296" height="46" rx="12" class="hit"/>
+          <text x="248" y="42" class="label">إضافة إلى الشاشة الرئيسية</text>
+          <g transform="translate(266 20)" class="plus"><rect x="1.5" y="1.5" width="27" height="27" rx="7" fill="none" stroke-width="3"/><path d="M15 8v14M8 15h14" stroke-width="3" stroke-linecap="round"/></g>
+        </svg>
+      </li>
+      <li>
+        <p>اضغط <b>إضافة</b></p>
+      </li>
+      <li>
+        <p>افتح مطمورتي من أيقونتها على الشاشة</p>
+      </li>
+    </ol>
+
+    <!-- Firefox or Edge on the iPhone. -->
+    <ol class="steps" data-variant="other-browser" hidden>
+      <li><p>اضغط زر <b>المشاركة</b> جنب العنوان فوق الشاشة</p></li>
+      <li><p>اختر <b>إضافة إلى الشاشة الرئيسية</b>، ثم <b>إضافة</b></p></li>
+      <li><p>افتح مطمورتي من أيقونتها على الشاشة</p></li>
+    </ol>
+
+    <!-- Inside Instagram, Facebook, TikTok…: those cannot add to the home
+         screen. -->
+    <section class="steps" data-variant="in-app" hidden>
+      <p>هالصفحة مفتوحة جوّا تطبيق تاني، ومن هون ما بينفع التثبيت.</p>
+      <p>اضغط <b>•••</b> أو زر المشاركة واختر <b>فتح في Safari</b>، أو انسخ الرابط والصقه بـ Safari:</p>
+      <p class="link-row"><span class="link" dir="ltr">khaderhash.github.io/matmurti</span> <button type="button" id="copy-link">نسخ الرابط</button></p>
+    </section>
+
+    <!-- Older than iOS 16.4. -->
+    <section class="steps" data-variant="old-ios" hidden>
+      <p>مطمورتي بتحتاج iOS 16.4 أو أحدث.</p>
+      <p>حدّث الآيفون من <b>الإعدادات ← عام ← تحديث البرنامج</b>، ورجاع افتح هالرابط.</p>
+    </section>
+
+    <aside class="warning">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3L2 21h20L12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v5M12 18v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <p><b>مهم:</b> إذا كمّلت من المتصفح بدون تثبيت، أي شي بتسجله هون <b>ما رح يظهر</b> بالتطبيق بعد ما تثبّته، والمتصفح ممكن يمسحه لحاله.</p>
+    </aside>
+
+    <p class="note">ما لقيت «إضافة إلى الشاشة الرئيسية»؟ افتح الرابط بـ Safari أو Chrome نفسه، مو من جوّا تطبيق تاني.</p>
+
+    <button type="button" id="continue-anyway" class="secondary">كمّل بدون تثبيت</button>
+  </main>
+
+  <noscript>
+    <p class="noscript">مطمورتي بتحتاج JavaScript. فعّله من إعدادات المتصفح.</p>
+  </noscript>
+
+  <!-- The install guide's styles: after the splash, so they never delay it. -->
+  <link rel="stylesheet" href="app_shell.css">
+
+  <!-- Decides between the install guide and the app, then loads Flutter
+       (flutter_bootstrap.js) and the offline service worker. -->
+  <script src="app_shell.js"></script>
+</body>
+</html>
