@@ -17,6 +17,10 @@
 //   openInstallGuide() back to the install guide
 //   persisted          the browser promised not to evict this app's data
 //                      (navigator.storage.persist); null when unknown
+//   keyboard()         iPhone: the app's surface hidden by the on-screen
+//                      keyboard (bottom) and by a pan of the page (top), in
+//                      CSS pixels; null elsewhere
+//   onKeyboard         set by Dart; called when keyboard() may have changed
 (function () {
   'use strict';
 
@@ -30,6 +34,8 @@
     safeArea: safeArea,
     inBrowserTab: false,
     persisted: null,
+    keyboard: keyboard,
+    onKeyboard: null,
     openInstallGuide: function () {
       remove(CONTINUE_KEY);
       window.location.reload();
@@ -92,6 +98,42 @@
       bottom: parseFloat(s.paddingBottom) || 0,
       left: parseFloat(s.paddingLeft) || 0,
     };
+  }
+
+  // --- The on-screen keyboard (iPhone) ------------------------------------
+
+  // iOS keeps the page's size when the keyboard opens: only
+  // window.visualViewport shrinks, and Safari may also pan the page up to
+  // show the focused field. Flutter's web engine does not always notice
+  // (and the pan it never accounts for), so the app lays itself out in the
+  // part of its surface the visual viewport really shows.
+  function keyboard() {
+    var vv = window.visualViewport;
+    var view = document.querySelector('flutter-view');
+    if (!ios || !vv || !view) return null;
+    var r = view.getBoundingClientRect();
+    return {
+      top: Math.max(0, Math.round(vv.offsetTop - r.top)),
+      right: 0,
+      bottom: Math.max(0, Math.round(r.bottom - (vv.offsetTop + vv.height))),
+      left: 0,
+    };
+  }
+
+  function keyboardChanged() {
+    var vv = window.visualViewport;
+    // Keyboard closed but the page is still panned (iOS sometimes leaves it
+    // there): put it back.
+    if (vv && vv.height >= document.documentElement.clientHeight - 1 &&
+        (window.scrollY || vv.offsetTop)) {
+      window.scrollTo(0, 0);
+    }
+    if (typeof shell.onKeyboard === 'function') shell.onKeyboard();
+  }
+
+  if (ios && window.visualViewport) {
+    window.visualViewport.addEventListener('resize', keyboardChanged);
+    window.visualViewport.addEventListener('scroll', keyboardChanged);
   }
 
   // --- The install guide ---------------------------------------------------
